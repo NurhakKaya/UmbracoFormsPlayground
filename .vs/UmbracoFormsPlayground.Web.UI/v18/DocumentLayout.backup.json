@@ -1,0 +1,45 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\repos\\UmbracoFormsPlayground\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F8476DEA-DDA5-1B03-DCCF-A9ACB32B0921}|UmbracoFormsPlayground.Web.UI.csproj|d:\\repos\\umbracoformsplayground\\umbracoformsplayground.web.ui\\umbracoformsplayground.web.ui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F8476DEA-DDA5-1B03-DCCF-A9ACB32B0921}|UmbracoFormsPlayground.Web.UI.csproj|solutionrelative:umbracoformsplayground.web.ui\\umbracoformsplayground.web.ui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "UmbracoFormsPlayground.Web.UI",
+              "DocumentMoniker": "D:\\repos\\UmbracoFormsPlayground\\UmbracoFormsPlayground.Web.UI\\UmbracoFormsPlayground.Web.UI.csproj",
+              "RelativeDocumentMoniker": "UmbracoFormsPlayground.Web.UI\\UmbracoFormsPlayground.Web.UI.csproj",
+              "ToolTip": "D:\\repos\\UmbracoFormsPlayground\\UmbracoFormsPlayground.Web.UI\\UmbracoFormsPlayground.Web.UI.csproj",
+              "RelativeToolTip": "UmbracoFormsPlayground.Web.UI\\UmbracoFormsPlayground.Web.UI.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-09-25T17:51:57.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{f5cd1b51-c771-5648-966f-646d419b1e7c}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

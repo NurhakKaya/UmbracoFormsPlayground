@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Umbraco.Cms"/>
-    <PackageReference Include="Umbraco.Cms.DevelopmentMode.Backoffice"/>
+    <PackageReference Include="Umbraco.Cms" />
+    <PackageReference Include="Umbraco.Cms.DevelopmentMode.Backoffice" />
+    <PackageReference Include="Umbraco.Forms" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -29,7 +30,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(UmbracoUseAppLocalIcu)' == 'true'">
-    <PackageReference Include="Microsoft.ICU.ICU4C.Runtime"/>
+    <PackageReference Include="Microsoft.ICU.ICU4C.Runtime" />
     <RuntimeHostConfigurationOption Include="System.Globalization.AppLocalIcu" Value="$(UmbracoAppLocalIcuVersion)" />
   </ItemGroup>
 
