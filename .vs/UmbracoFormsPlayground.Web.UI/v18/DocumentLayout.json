@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\repos\\UmbracoFormsPlayground\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F8476DEA-DDA5-1B03-DCCF-A9ACB32B0921}|UmbracoFormsPlayground.Web.UI.csproj|d:\\repos\\umbracoformsplayground\\umbracoformsplayground.web.ui\\umbracoformsplayground.web.ui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{F8476DEA-DDA5-1B03-DCCF-A9ACB32B0921}|UmbracoFormsPlayground.Web.UI.csproj|solutionrelative:umbracoformsplayground.web.ui\\umbracoformsplayground.web.ui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F8476DEA-DDA5-1B03-DCCF-A9ACB32B0921}|UmbracoFormsPlayground.Web.UI\\UmbracoFormsPlayground.Web.UI.csproj|d:\\repos\\umbracoformsplayground\\umbracoformsplayground.web.ui\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{F8476DEA-DDA5-1B03-DCCF-A9ACB32B0921}|UmbracoFormsPlayground.Web.UI\\UmbracoFormsPlayground.Web.UI.csproj|solutionrelative:umbracoformsplayground.web.ui\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F8476DEA-DDA5-1B03-DCCF-A9ACB32B0921}|UmbracoFormsPlayground.Web.UI.csproj|d:\\repos\\umbracoformsplayground\\umbracoformsplayground.web.ui\\umbracoformsplayground.web.ui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F8476DEA-DDA5-1B03-DCCF-A9ACB32B0921}|UmbracoFormsPlayground.Web.UI.csproj|solutionrelative:umbracoformsplayground.web.ui\\umbracoformsplayground.web.ui.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F8476DEA-DDA5-1B03-DCCF-A9ACB32B0921}|UmbracoFormsPlayground.Web.UI\\UmbracoFormsPlayground.Web.UI.csproj|d:\\repos\\umbracoformsplayground\\umbracoformsplayground.web.ui\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -22,8 +22,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "D:\\repos\\UmbracoFormsPlayground\\UmbracoFormsPlayground.Web.UI\\appsettings.json",
+              "RelativeDocumentMoniker": "UmbracoFormsPlayground.Web.UI\\appsettings.json",
+              "ToolTip": "D:\\repos\\UmbracoFormsPlayground\\UmbracoFormsPlayground.Web.UI\\appsettings.json",
+              "RelativeToolTip": "UmbracoFormsPlayground.Web.UI\\appsettings.json",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAqwCoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-09-25T18:07:27.765Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -40,19 +53,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\repos\\UmbracoFormsPlayground\\UmbracoFormsPlayground.Web.UI\\appsettings.json",
-              "RelativeDocumentMoniker": "UmbracoFormsPlayground.Web.UI\\appsettings.json",
-              "ToolTip": "D:\\repos\\UmbracoFormsPlayground\\UmbracoFormsPlayground.Web.UI\\appsettings.json",
-              "RelativeToolTip": "UmbracoFormsPlayground.Web.UI\\appsettings.json",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACMAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-09-25T18:07:27.765Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "UmbracoFormsPlayground.Web.UI",
               "DocumentMoniker": "D:\\repos\\UmbracoFormsPlayground\\UmbracoFormsPlayground.Web.UI\\UmbracoFormsPlayground.Web.UI.csproj",
               "RelativeDocumentMoniker": "UmbracoFormsPlayground.Web.UI\\UmbracoFormsPlayground.Web.UI.csproj",
