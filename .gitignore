@@ -1,2 +1,9 @@
 # Visual Studio local state
 .vs/
+
+# .NET build output (all projects)
+[Bb]in/
+[Oo]bj/
+
+# User-specific IDE files
+*.user
