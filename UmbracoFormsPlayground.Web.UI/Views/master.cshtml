@@ -8,6 +8,20 @@
 <html lang="en">
 <head>
     @await Html.PartialAsync("~/Views/Partials/metaData.cshtml")
+    <!-- Theme: must run before any stylesheet so the first paint is already the right theme (no flash).
+         Stored choice wins, otherwise follow the OS. All storage access is guarded. -->
+    <script>
+        (function () {
+            var theme = null;
+            try { theme = localStorage.getItem('theme-preference'); } catch (e) { }
+            if (theme !== 'light' && theme !== 'dark') {
+                theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            }
+            var root = document.documentElement;
+            root.setAttribute('data-theme', theme);
+            root.style.colorScheme = theme;
+        })();
+    </script>
     <!-- Font Awesome icons (free version)-->
     <script defer src="https://use.fontawesome.com/releases/v6.5.1/js/all.js" crossorigin="anonymous" integrity="sha384-3ve3u7etWcm2heCe4TswfZSAYSg2jR/EJxRHuKM5foOiKS8IJL/xRlvmjCaHELBz"></script>
     <!-- Fonts - Using jsDelivr CDN with Subresource Integrity for security -->
@@ -19,6 +33,8 @@
     <link href="/assets/css/vs2015.css" rel="stylesheet" asp-append-version="true" />
     <link href="/assets/css/highlightjs-copy.min.css" rel="stylesheet" asp-append-version="true" />
     <link href="/assets/css/swiffy-slider.min.css" rel="stylesheet" asp-append-version="true" />
+    <!-- Dark theme + toggle styles. Separate file because the Clean package overwrites wwwroot/assets/** and wwwroot/css/** files it ships. Keep last. -->
+    <link href="/css/theme.css" rel="stylesheet" asp-append-version="true" />
 </head>
 <body>
     @await Html.CachedPartialAsync("~/Views/Partials/mainNavigation.cshtml", model: Model, cacheTimeout: TimeSpan.FromMinutes(60))
@@ -33,5 +49,6 @@
     <script src="/assets/js/highlightjs-copy.min.js" asp-append-version="true"></script>
     <script src="/assets/js/initHighlight.js" asp-append-version="true"></script>
     <script src="/assets/js/swiffy-slider.min.js" asp-append-version="true"></script>
+    <script src="/js/theme-toggle.js" asp-append-version="true"></script>
 </body>
 </html>

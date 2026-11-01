@@ -1,0 +1,402 @@
+/*
+ * Site theme layer: light/dark toggle + dark palette.
+ *
+ * Why this is a separate file: the Clean NuGet package re-copies everything under
+ * wwwroot/assets/** and wwwroot/css/** (the files it ships) into this project on every build
+ * (see buildTransitive/Clean.targets), overwriting edits. This file is not shipped by the
+ * package, so it survives. Load it AFTER /assets/css/styles.css.
+ *
+ * Mechanism: an inline script in <head> (master.cshtml) sets data-theme="light|dark" on <html>
+ * before the stylesheets render. /js/theme-toggle.js handles the toggle button. Nothing here applies
+ * unless data-theme="dark", except the toggle button itself and color-scheme.
+ *
+ * Palette: derived from the Clean theme's brand teal #005E70 (hue ~189deg). Neutrals are the same
+ * hue at low saturation, the accent is the brand hue lifted to a lightness that works on dark.
+ * Contrast ratios are documented in the hand-off report; all text >= 4.5:1, UI/graphics >= 3:1.
+ */
+
+/* ---------- Native controls and scrollbars follow the theme ---------- */
+html { color-scheme: light; }
+html[data-theme="dark"] { color-scheme: dark; }
+
+/* ---------- Dark tokens ---------- */
+html[data-theme="dark"] {
+  --theme-bg: #0e191c;          /* page background */
+  --theme-surface: #15252a;     /* cards, inputs, mobile nav */
+  --theme-surface-2: #1c3036;   /* hover / badges */
+  --theme-text: #e4edef;        /* body text */
+  --theme-muted: #9db3b9;       /* secondary text, meta, placeholders */
+  --theme-border: #2c444b;      /* decorative dividers */
+  --theme-input-border: #7a9aa3;/* input / control borders (>= 3:1) */
+  --theme-accent: #4cc2d8;      /* links, text-primary, primary button fill */
+  --theme-accent-hover: #86dbea;/* hover + focus ring */
+  --theme-on-accent: #06252c;   /* text on accent fills */
+  --theme-danger: #ff8f99;      /* validation / error text */
+  --theme-danger-bg: #3a1a1f;   /* error message background */
+  --theme-code-inline: #ff9ec9; /* inline <code> (was #d63384) */
+
+  /* Bootstrap 5.1 variables that the compiled theme actually consumes */
+  --bs-body-color: var(--theme-text);
+  --bs-body-bg: var(--theme-bg);
+  --bs-body-color-rgb: 228, 237, 239;
+  --bs-body-bg-rgb: 14, 25, 28;
+  --bs-primary-rgb: 76, 194, 216;
+}
+
+html[data-theme="dark"] body {
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+}
+
+/* ---------- Text, links, rules ---------- */
+html[data-theme="dark"] a { color: var(--theme-text); }
+html[data-theme="dark"] a:hover { color: var(--theme-accent); }
+html[data-theme="dark"] a:not([href]):not([class]),
+html[data-theme="dark"] a:not([href]):not([class]):hover { color: inherit; }
+html[data-theme="dark"] a > code { color: inherit; }
+html[data-theme="dark"] code { color: var(--theme-code-inline); }
+html[data-theme="dark"] pre code { color: inherit; }
+html[data-theme="dark"] hr { background-color: var(--theme-border); color: var(--theme-border); }
+html[data-theme="dark"] blockquote { color: var(--theme-muted); }
+html[data-theme="dark"] .text-muted { color: var(--theme-muted) !important; }
+html[data-theme="dark"] .text-dark { color: var(--theme-text) !important; }
+html[data-theme="dark"] .text-danger { color: var(--theme-danger) !important; }
+html[data-theme="dark"] .bg-light { background-color: var(--theme-surface-2) !important; }
+html[data-theme="dark"] .caption { color: var(--theme-muted); }
+
+/* Visible keyboard focus everywhere in dark mode (Bootstrap removes outlines on form controls) */
+html[data-theme="dark"] :focus-visible {
+  outline: 2px solid var(--theme-accent-hover);
+  outline-offset: 2px;
+}
+
+/* Social icons are inline SVG with no fill (black by default) */
+html[data-theme="dark"] .social-icon { fill: var(--theme-text); }
+html[data-theme="dark"] .social-icon:hover { fill: var(--theme-accent); }
+
+/* Code blocks are already dark (vs2015); give them an edge against the dark page */
+html[data-theme="dark"] pre { border: 1px solid var(--theme-border); }
+
+/* ---------- Article list / search result previews ---------- */
+html[data-theme="dark"] .post-preview > a { color: var(--theme-text); }
+html[data-theme="dark"] .post-preview > a:focus,
+html[data-theme="dark"] .post-preview > a:hover { color: var(--theme-accent); }
+html[data-theme="dark"] .post-preview > .post-meta { color: var(--theme-muted); }
+
+/* ---------- Header / hero ---------- */
+html[data-theme="dark"] header.masthead { background-color: var(--theme-surface-2); }
+/* Stronger overlay: keeps white hero text >= 4.5:1 even over a pure-white photo */
+html[data-theme="dark"] header.masthead:before { background-color: #050e10; opacity: 0.62; }
+
+/* ---------- Navigation ---------- */
+@media (max-width: 991.98px) {
+  html[data-theme="dark"] #mainNav {
+    background-color: var(--theme-surface);
+    border-bottom-color: var(--theme-border);
+  }
+  html[data-theme="dark"] .navbar-light .navbar-brand { color: var(--theme-text); }
+  html[data-theme="dark"] .navbar-light .navbar-brand:hover,
+  html[data-theme="dark"] .navbar-light .navbar-brand:focus { color: var(--theme-accent); }
+  html[data-theme="dark"] .navbar-light .navbar-nav .nav-link { color: var(--theme-muted); }
+  html[data-theme="dark"] .navbar-light .navbar-nav .nav-link:hover,
+  html[data-theme="dark"] .navbar-light .navbar-nav .nav-link:focus { color: var(--theme-text); }
+  html[data-theme="dark"] .navbar-light .navbar-toggler {
+    color: var(--theme-text);
+    border-color: var(--theme-input-border);
+  }
+}
+@media (min-width: 992px) {
+  html[data-theme="dark"] #mainNav.is-fixed {
+    background-color: rgba(14, 25, 28, 0.94);
+    border-bottom-color: var(--theme-border);
+  }
+  html[data-theme="dark"] #mainNav.is-fixed .navbar-brand,
+  html[data-theme="dark"] #mainNav.is-fixed .navbar-nav > li.nav-item > a { color: var(--theme-text); }
+  html[data-theme="dark"] #mainNav.is-fixed .navbar-brand:focus,
+  html[data-theme="dark"] #mainNav.is-fixed .navbar-brand:hover,
+  html[data-theme="dark"] #mainNav.is-fixed .navbar-nav > li.nav-item > a:focus,
+  html[data-theme="dark"] #mainNav.is-fixed .navbar-nav > li.nav-item > a:hover { color: var(--theme-accent); }
+}
+
+/* ---------- Buttons ---------- */
+html[data-theme="dark"] .btn-primary,
+html[data-theme="dark"] .btn-primary:disabled,
+html[data-theme="dark"] .btn-primary.disabled {
+  color: var(--theme-on-accent);
+  background-color: var(--theme-accent);
+  border-color: var(--theme-accent);
+}
+html[data-theme="dark"] .btn-primary:hover,
+html[data-theme="dark"] .btn-primary:focus,
+html[data-theme="dark"] .btn-check:focus + .btn-primary,
+html[data-theme="dark"] .btn-primary:active,
+html[data-theme="dark"] .btn-primary.active {
+  color: var(--theme-on-accent);
+  background-color: var(--theme-accent-hover);
+  border-color: var(--theme-accent-hover);
+  box-shadow: none;
+}
+
+/* ---------- Form controls (Bootstrap + Contact component + Search) ---------- */
+html[data-theme="dark"] .form-control,
+html[data-theme="dark"] .form-select {
+  color: var(--theme-text);
+  background-color: var(--theme-surface);
+  border-color: var(--theme-input-border);
+}
+html[data-theme="dark"] .form-control:focus,
+html[data-theme="dark"] .form-select:focus {
+  color: var(--theme-text);
+  background-color: var(--theme-surface);
+  border-color: var(--theme-accent-hover);
+  box-shadow: 0 0 0 0.2rem rgba(76, 194, 216, 0.4);
+}
+/* Contact form uses borderless-but-bottom .form-floating inputs */
+html[data-theme="dark"] .form-floating input:focus,
+html[data-theme="dark"] .form-floating textarea:focus { box-shadow: none; }
+html[data-theme="dark"] .form-control::placeholder { color: var(--theme-muted); opacity: 1; }
+/* Floating-label inputs hide the placeholder (the label acts as one); keep that */
+html[data-theme="dark"] .form-floating > .form-control::placeholder { color: transparent; }
+html[data-theme="dark"] .form-control:disabled,
+html[data-theme="dark"] .form-control[readonly] { background-color: var(--theme-surface-2); }
+html[data-theme="dark"] .form-control::file-selector-button {
+  color: var(--theme-text);
+  background-color: var(--theme-surface-2);
+  border-color: var(--theme-input-border);
+}
+html[data-theme="dark"] .form-floating label { color: var(--theme-muted); }
+/* Bootstrap fades the floated label to 65% opacity, which would drop it below 4.5:1 */
+html[data-theme="dark"] .form-floating > .form-control:focus ~ label,
+html[data-theme="dark"] .form-floating > .form-control:not(:placeholder-shown) ~ label,
+html[data-theme="dark"] .form-floating > .form-select ~ label { opacity: 1; }
+html[data-theme="dark"] .form-control:-webkit-autofill,
+html[data-theme="dark"] .form-control:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--theme-text);
+  box-shadow: 0 0 0 1000px var(--theme-surface) inset;
+  caret-color: var(--theme-text);
+}
+html[data-theme="dark"] .form-check-input {
+  background-color: var(--theme-surface);
+  border-color: var(--theme-input-border);
+}
+html[data-theme="dark"] .form-check-input:checked {
+  background-color: var(--theme-accent);
+  border-color: var(--theme-accent);
+}
+html[data-theme="dark"] .form-check-input:checked[type="checkbox"] {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%2306252c' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+}
+html[data-theme="dark"] .form-check-input:checked[type="radio"] {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%2306252c'/%3e%3c/svg%3e");
+}
+html[data-theme="dark"] .is-invalid,
+html[data-theme="dark"] .form-control.is-invalid { border-color: var(--theme-danger); }
+html[data-theme="dark"] .invalid-feedback { color: var(--theme-danger); }
+html[data-theme="dark"] input,
+html[data-theme="dark"] textarea,
+html[data-theme="dark"] select { accent-color: var(--theme-accent); }
+
+/* ---------- Umbraco Forms (default + bootstrap3-horizontal themes) ----------
+   The Forms theme stylesheet is served by the Forms package and uses hard-coded light colours,
+   some with !important, so these overrides are deliberately specific. */
+html[data-theme="dark"] .umbraco-forms-form,
+html[data-theme="dark"] .umbraco-forms-form label,
+html[data-theme="dark"] .umbraco-forms-form legend,
+html[data-theme="dark"] .umbraco-forms-form .umbraco-forms-caption { color: var(--theme-text); }
+html[data-theme="dark"] label.umbraco-forms-label { background: transparent !important; color: var(--theme-text); }
+html[data-theme="dark"] .umbraco-forms-form small,
+html[data-theme="dark"] .umbraco-forms-form .help-block,
+html[data-theme="dark"] .umbraco-forms-tooltip { color: var(--theme-muted); }
+html[data-theme="dark"] .umbraco-forms-form input.text,
+html[data-theme="dark"] .umbraco-forms-form input.title,
+html[data-theme="dark"] .umbraco-forms-form input[type="text"],
+html[data-theme="dark"] .umbraco-forms-form input[type="email"],
+html[data-theme="dark"] .umbraco-forms-form input[type="tel"],
+html[data-theme="dark"] .umbraco-forms-form input[type="url"],
+html[data-theme="dark"] .umbraco-forms-form input[type="number"],
+html[data-theme="dark"] .umbraco-forms-form input[type="date"],
+html[data-theme="dark"] .umbraco-forms-form input[type="password"],
+html[data-theme="dark"] .umbraco-forms-form input[type="search"],
+html[data-theme="dark"] .umbraco-forms-form textarea,
+html[data-theme="dark"] .umbraco-forms-form select {
+  color: var(--theme-text);
+  background-color: var(--theme-surface);
+  border: 1px solid var(--theme-input-border);
+}
+html[data-theme="dark"] .umbraco-forms-form input.text:focus,
+html[data-theme="dark"] .umbraco-forms-form input.title:focus,
+html[data-theme="dark"] .umbraco-forms-form input[type="text"]:focus,
+html[data-theme="dark"] .umbraco-forms-form input[type="email"]:focus,
+html[data-theme="dark"] .umbraco-forms-form textarea:focus,
+html[data-theme="dark"] .umbraco-forms-form select:focus {
+  border: 1px solid var(--theme-accent-hover);
+}
+html[data-theme="dark"] .umbraco-forms-form ::placeholder { color: var(--theme-muted); opacity: 1; }
+/* Validation: Forms hard-codes #8a1f11 !important on errors (about 2:1 on dark) */
+html[data-theme="dark"] .umbraco-forms-form span.contourError,
+html[data-theme="dark"] .umbraco-forms-form span.field-validation-error,
+html[data-theme="dark"] .umbraco-forms-form .field-validation-error,
+html[data-theme="dark"] .umbraco-forms-form .has-error .help-block,
+html[data-theme="dark"] .umbraco-forms-form .has-error .control-label,
+html[data-theme="dark"] .umbraco-forms-form .validation-summary-errors {
+  color: var(--theme-danger) !important;
+  background: transparent !important;
+}
+html[data-theme="dark"] .umbraco-forms-form input.contourError,
+html[data-theme="dark"] .umbraco-forms-form textarea.contourError,
+html[data-theme="dark"] .umbraco-forms-form input.input-validation-error,
+html[data-theme="dark"] .umbraco-forms-form textarea.input-validation-error,
+html[data-theme="dark"] .umbraco-forms-form select.input-validation-error,
+html[data-theme="dark"] .umbraco-forms-form .has-error .form-control {
+  background-color: var(--theme-danger-bg);
+  border-color: var(--theme-danger);
+}
+html[data-theme="dark"] .umbraco-forms-error-message {
+  background: var(--theme-danger-bg);
+  color: #ffb3ba;
+  border-color: var(--theme-danger);
+}
+/* Forms buttons: native <input type=submit class="btn primary"> */
+html[data-theme="dark"] .umbraco-forms-form .btn,
+html[data-theme="dark"] .umbraco-forms-form .umbraco-forms-button,
+html[data-theme="dark"] .umbraco-forms-form input[type="submit"],
+html[data-theme="dark"] .umbraco-forms-form input[type="button"],
+html[data-theme="dark"] .umbraco-forms-form button {
+  color: var(--theme-text);
+  background-color: var(--theme-surface-2);
+  border: 1px solid var(--theme-input-border);
+}
+html[data-theme="dark"] .umbraco-forms-form .btn.primary,
+html[data-theme="dark"] .umbraco-forms-form .btn-primary,
+html[data-theme="dark"] .umbraco-forms-form input[type="submit"].primary,
+html[data-theme="dark"] .umbraco-forms-form button[type="submit"] {
+  color: var(--theme-on-accent);
+  background-color: var(--theme-accent);
+  border-color: var(--theme-accent);
+}
+html[data-theme="dark"] .umbraco-forms-form .btn.primary:hover,
+html[data-theme="dark"] .umbraco-forms-form .btn-primary:hover,
+html[data-theme="dark"] .umbraco-forms-form input[type="submit"].primary:hover,
+html[data-theme="dark"] .umbraco-forms-form button[type="submit"]:hover {
+  background-color: var(--theme-accent-hover);
+  border-color: var(--theme-accent-hover);
+}
+
+/* ---------- Pagination component ---------- */
+html[data-theme="dark"] .page-link {
+  color: var(--theme-text);
+  background-color: var(--theme-surface);
+  border-color: var(--theme-border);
+}
+html[data-theme="dark"] .page-link:hover,
+html[data-theme="dark"] .page-link:focus {
+  color: var(--theme-accent-hover);
+  background-color: var(--theme-surface-2);
+  border-color: var(--theme-input-border);
+  box-shadow: none;
+}
+html[data-theme="dark"] .page-item.active .page-link {
+  color: var(--theme-on-accent);
+  background-color: var(--theme-accent);
+  border-color: var(--theme-accent);
+}
+html[data-theme="dark"] .page-item.disabled .page-link {
+  color: var(--theme-muted);
+  background-color: var(--theme-surface);
+  border-color: var(--theme-border);
+}
+
+/* ---------- Author cards ---------- */
+html[data-theme="dark"] .card {
+  background-color: var(--theme-surface);
+  border-color: var(--theme-border);
+  color: var(--theme-text);
+}
+
+/* ---------- Rich text tables ---------- */
+html[data-theme="dark"] .table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-color: var(--theme-text);
+  --bs-table-striped-bg: rgba(255, 255, 255, 0.05);
+  --bs-table-hover-color: var(--theme-text);
+  --bs-table-hover-bg: rgba(255, 255, 255, 0.08);
+  color: var(--theme-text);
+  border-color: var(--theme-border);
+}
+
+/* ---------- Theme toggle (both themes) ----------
+   Colour model: --tt-fg is the control colour, --tt-ic the icon colour drawn on the filled thumb.
+   The fg always matches the adjacent nav link colour in that context, so contrast against the
+   nav background is the same as the nav text (>= 4.5:1), well above the 3:1 non-text minimum. */
+.theme-toggle {
+  --tt-fg: #212529;
+  --tt-ic: #fff;
+  display: inline-flex;
+  align-items: center;
+  margin: 0 0.5rem 0 auto;
+  padding: 0.625rem 0.5rem; /* 44px high hit area */
+  background: transparent;
+  border: 0;
+  color: var(--tt-fg);
+  line-height: 1;
+  cursor: pointer;
+}
+html:not([data-theme]) .theme-toggle { display: none; } /* no JS, no switch */
+html[data-theme="dark"] .theme-toggle { --tt-fg: #e4edef; --tt-ic: #0e191c; }
+
+.theme-toggle__track {
+  position: relative;
+  display: inline-block;
+  width: 2.75rem;
+  height: 1.5rem;
+  border: 2px solid var(--tt-fg);
+  border-radius: 999px;
+  box-sizing: border-box;
+}
+.theme-toggle__thumb {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: -0.5625rem;
+  border-radius: 50%;
+  background: var(--tt-fg);
+  color: var(--tt-ic);
+}
+html[data-theme="dark"] .theme-toggle__thumb { left: calc(100% - 1.125rem - 2px); }
+.theme-toggle__icon { width: 0.75rem; height: 0.75rem; fill: currentColor; }
+.theme-toggle__icon--moon { display: none; }
+html[data-theme="dark"] .theme-toggle__icon--sun { display: none; }
+html[data-theme="dark"] .theme-toggle__icon--moon { display: block; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .theme-toggle__thumb { transition: left 0.2s ease; }
+}
+
+/* Focus ring: currentColor so it contrasts with whatever the nav sits on, in both themes */
+#mainNav .theme-toggle:focus-visible {
+  outline: 2px solid var(--tt-fg);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (min-width: 992px) {
+  .theme-toggle { margin: 0 0 0 0.5rem; order: 99; }
+  /* Not scrolled: nav is transparent over the dark hero overlay, links are white */
+  #mainNav:not(.is-fixed) .theme-toggle { --tt-fg: #fff; --tt-ic: #212529; }
+  /* Scrolled: nav gets a themed background */
+  #mainNav.is-fixed .theme-toggle { --tt-fg: #212529; --tt-ic: #fff; }
+  html[data-theme="dark"] #mainNav.is-fixed .theme-toggle { --tt-fg: #e4edef; --tt-ic: #0e191c; }
+}
+@media (max-width: 991.98px) {
+  /* Sits between the brand and the Menu button, always visible without opening the menu */
+  .theme-toggle { margin-right: 0.25rem; }
+}
+@media (max-width: 479.98px) {
+  /* Let the brand shrink/wrap instead of pushing the Menu button onto its own row on narrow phones */
+  #mainNav .navbar-brand { flex: 1 1 0; min-width: 0; margin-right: 0.5rem; white-space: normal; }
+}
