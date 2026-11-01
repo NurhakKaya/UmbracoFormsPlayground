@@ -8,11 +8,14 @@
       its own fallback to stay in sync with the RuntimeHostConfigurationOption value set from the same property.
     -->
     <UmbracoAppLocalIcuVersion Condition="'$(UmbracoAppLocalIcuVersion)' == ''">72.1.0.3</UmbracoAppLocalIcuVersion>
+    <!-- Single Umbraco CMS version for every project in the repo (site and class libraries). Change it here only. -->
+    <UmbracoCmsVersion>17.8.0</UmbracoCmsVersion>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Clean" Version="7.0.8" />
-    <PackageVersion Include="Umbraco.Cms" Version="17.8.0" />
-    <PackageVersion Include="Umbraco.Cms.DevelopmentMode.Backoffice" Version="17.8.0" />
+    <PackageVersion Include="Umbraco.Cms" Version="$(UmbracoCmsVersion)" />
+    <PackageVersion Include="Umbraco.Cms.Core" Version="$(UmbracoCmsVersion)" />
+    <PackageVersion Include="Umbraco.Cms.DevelopmentMode.Backoffice" Version="$(UmbracoCmsVersion)" />
     <PackageVersion Include="Microsoft.ICU.ICU4C.Runtime" Version="$(UmbracoAppLocalIcuVersion)" />
     <PackageVersion Include="Umbraco.Forms" Version="17.6.2" />
   </ItemGroup>
