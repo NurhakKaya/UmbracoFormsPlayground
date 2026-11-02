@@ -12,4 +12,9 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- Version comes from Directory.Packages.props at the repo root. -->
+    <PackageReference Include="Umbraco.Cms.Core" />
+  </ItemGroup>
+
 </Project>
